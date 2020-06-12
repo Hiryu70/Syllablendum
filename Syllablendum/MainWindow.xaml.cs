@@ -24,6 +24,7 @@ namespace Syllablendum
             ProgressBarWrong.Value = 0;
             Syllable.Visibility = Visibility.Visible;
             Winner.Visibility = Visibility.Collapsed;
+            Loser.Visibility = Visibility.Collapsed;
             Ok.Content = "Правильно";
             Wrong.Content = "Неправильно";
             
@@ -49,48 +50,51 @@ namespace Syllablendum
             var random = new Random();
             var vovel = vowels[random.Next(vowels.Length)];
             var consonant = consonants[random.Next(consonants.Length)];
-            var result = $"{consonant}{vovel}";
+
+            var order = random.Next(2);
+            var result = order == 0 
+                ? $"{consonant}{vovel}" 
+                : $"{vovel}{consonant}";
+            
             return result;
         }
 
         private void Ok_OnClick(object sender, RoutedEventArgs e)
         {
-            SetSyllable();
             _okCount++;
-            SetProgressBar();
+            CheckEndGameCondition();
+            SetSyllable();
+            ProgressBarOk.Value = _okCount;
             Ok.Content = $"Правильно {_okCount}";
         }
-
-        private void SetProgressBar()
+        
+        private void Wrong_OnClick(object sender, RoutedEventArgs e)
         {
-            var trueBalance = _okCount - _wrongCount;
-            if (trueBalance >= 0)
-            {
-                ProgressBarOk.Value = trueBalance;
-                ProgressBarWrong.Value = 0;
-            }
-            else
-            {
-                ProgressBarWrong.Value = trueBalance * -1;
-                ProgressBarOk.Value = 0;
-            }
+            _wrongCount++;
+            CheckEndGameCondition();
+            SetSyllable();
+            ProgressBarWrong.Value = _wrongCount;
+            Wrong.Content = $"Неправильно {_wrongCount}";
+        }
 
-            if (trueBalance == (int)ProgressBarOk.Maximum)
+        private void CheckEndGameCondition()
+        {
+            if (_wrongCount == (int)ProgressBarWrong.Maximum)
+            {
+                Syllable.Visibility = Visibility.Collapsed;
+                Loser.Visibility = Visibility.Visible;
+            }
+            
+            if (_okCount == (int)ProgressBarOk.Maximum)
             {
                 Syllable.Visibility = Visibility.Collapsed;
                 Winner.Visibility = Visibility.Visible;
             }
         }
         
-        private void Wrong_OnClick(object sender, RoutedEventArgs e)
-        {
-            SetSyllable();
-            _wrongCount++;
-            SetProgressBar();
-            Wrong.Content = $"Неправильно {_wrongCount}";
-        }
 
-        private void Winner_OnMouseUp(object sender, MouseButtonEventArgs e)
+
+        private void ResetGame_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
             ResetProgram();
         }
