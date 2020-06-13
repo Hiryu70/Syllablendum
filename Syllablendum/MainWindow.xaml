@@ -22,6 +22,7 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
@@ -91,40 +92,54 @@
 			<Image Source="loser.png" />
 		</Button>
 
-		<ListBox Grid.Row="3"
-				 Grid.Column="0"
-				 Grid.ColumnSpan="2"
-				 ItemsSource="{Binding Consonants}">
-			<ListBox.ItemsPanel>
-				<ItemsPanelTemplate>
-					<WrapPanel />
-				</ItemsPanelTemplate>
-			</ListBox.ItemsPanel>
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<CheckBox Margin="0,0,10,0"
-							  Content="{Binding Value}"
-							  IsChecked="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		<ListBox Grid.Row="4"
-				 Grid.Column="0"
-				 Grid.ColumnSpan="2"
-				 ItemsSource="{Binding Vowels}">
-			<ListBox.ItemsPanel>
-				<ItemsPanelTemplate>
-					<WrapPanel />
-				</ItemsPanelTemplate>
-			</ListBox.ItemsPanel>
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<CheckBox Margin="0,0,10,0"
-							  Content="{Binding Value}"
-							  IsChecked="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-
+		<StackPanel Grid.Row="3"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Orientation="Horizontal">
+			<Button Margin="0,0,10,0"
+					Command="{Binding SwitchAllConsonantsCommand}"
+					Content="Все" />
+			<ListBox ItemsSource="{Binding Consonants}">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<CheckBox Margin="0,0,10,0"
+								  Content="{Binding Value}"
+								  IsChecked="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</StackPanel>
+		<StackPanel Grid.Row="4"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Orientation="Horizontal">
+			<Button Margin="0,0,10,0"
+					Command="{Binding SwitchAllVowelsCommand}"
+					Content="Все" />
+			<ListBox ItemsSource="{Binding Vowels}">
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<CheckBox Margin="0,0,10,0"
+								  Content="{Binding Value}"
+								  IsChecked="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</StackPanel>
+		<CheckBox Grid.Row="5"
+				  Grid.Column="0"
+				  Grid.ColumnSpan="2"
+				  Content="АБ&lt;-&gt;БА"
+				  IsChecked="{Binding OnlyOneOrder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 	</Grid>
 </Window>

@@ -12,12 +12,17 @@ namespace Syllablendum.ViewModels
 		private int _wrongCount;
 		private GameMode _gameMode;
 		private string _syllable;
+		private string _lastSyllable;
+		private bool _allowChangeOrder;
+
 
 		public MainWindowVm()
 		{
-			OkCommand = new RelayCommand(OnOk);
-			WrongCommand = new RelayCommand(OnWrong);
+			OkCommand = new RelayCommand(Ok);
+			WrongCommand = new RelayCommand(Wrong);
 			ResetCommand = new RelayCommand(ResetGame);
+			SwitchAllConsonantsCommand = new RelayCommand(SwitchAllConsonants);
+			SwitchAllVowelsCommand = new RelayCommand(SwitchAllVowels);
 			char[] consonants = { 'Ц', 'К', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 
 				'Ф', 'В', 'П', 'Р', 'Л', 'Д', 'Ж', 
 				'Ч', 'С', 'М', 'Т', 'Б' };
@@ -43,19 +48,10 @@ namespace Syllablendum.ViewModels
 			ResetGame();
 		}
 
+
 		public List<LetterVm> Consonants { get; set; } = new List<LetterVm>();
+
 		public List<LetterVm> Vowels { get; set; } = new List<LetterVm>();
-		public bool OnlyOneOrder { get; set; }
-
-		public string Syllable
-		{
-			get => _syllable;
-			set => Set(ref _syllable, value);
-		}
-
-		public RelayCommand OkCommand { get; set; }
-		public RelayCommand WrongCommand { get; set; }
-		public RelayCommand ResetCommand { get; set; }
 
 		public int OkCount
 		{
@@ -73,14 +69,36 @@ namespace Syllablendum.ViewModels
 
 		public int WrongMaximum { get; set; } = 10;
 
+		public string Syllable
+		{
+			get => _syllable;
+			set => Set(ref _syllable, value);
+		}
+
+		public bool AllowChangeOrder
+		{
+			get => _allowChangeOrder;
+			set => Set(ref _allowChangeOrder, value);
+		}
+
 		public GameMode GameMode
 		{
 			get => _gameMode;
 			set => Set(ref _gameMode, value);
 		}
 
+		public RelayCommand OkCommand { get; set; }
 
-		public void ResetGame()
+		public RelayCommand WrongCommand { get; set; }
+
+		public RelayCommand ResetCommand { get; set; }
+
+		public RelayCommand SwitchAllConsonantsCommand { get; set; }
+
+		public RelayCommand SwitchAllVowelsCommand { get; set; }
+
+
+		private void ResetGame()
 		{
 			OkCount = 0;
 			WrongCount = 0;
@@ -89,26 +107,50 @@ namespace Syllablendum.ViewModels
 			SetSyllable();
 		}
 
-		public void OnOk()
+		private void Ok()
 		{
 			OkCount++;
 			CheckEndGameCondition();
 			SetSyllable();
 		}
 
-		public void OnWrong()
+		private void Wrong()
 		{
 			WrongCount++;
 			CheckEndGameCondition();
 			SetSyllable();
 		}
 
-		public void SetSyllable()
+		private void SwitchAllConsonants()
 		{
-			Syllable = GetRandomSyllable();
+			var anyEnabled = Consonants.Any(c => c.IsEnabled);
+			foreach (LetterVm letter in Consonants)
+			{
+				letter.IsEnabled = !anyEnabled;
+			}
 		}
 
-		public void CheckEndGameCondition()
+		private void SwitchAllVowels()
+		{
+			var anyEnabled = Vowels.Any(c => c.IsEnabled);
+			foreach (LetterVm letter in Vowels)
+			{
+				letter.IsEnabled = !anyEnabled;
+			}
+		}
+
+		private void SetSyllable()
+		{
+			int attempt = 5;
+			do
+			{
+				Syllable = GetRandomSyllable();
+				attempt--;
+			} while (Syllable == _lastSyllable && attempt > 0);
+			_lastSyllable = Syllable;
+		}
+
+		private void CheckEndGameCondition()
 		{
 			if (WrongCount == WrongMaximum)
 			{
@@ -123,24 +165,24 @@ namespace Syllablendum.ViewModels
 
 		private string GetRandomSyllable()
 		{
-			var vowels = Vowels.Where(v => v.IsEnabled).ToArray();
-			var consonants = Consonants.Where(v => v.IsEnabled).ToArray();
+			LetterVm[] vowels = Vowels.Where(v => v.IsEnabled).ToArray();
+			LetterVm[] consonants = Consonants.Where(v => v.IsEnabled).ToArray();
 
 			var random = new Random();
-			var vovel = vowels[random.Next(vowels.Length)];
-			var consonant = consonants[random.Next(consonants.Length)];
+			LetterVm vovel = vowels[random.Next(vowels.Length)];
+			LetterVm consonant = consonants[random.Next(consonants.Length)];
 
 			string result;
-			if (OnlyOneOrder)
-			{
-				result = $"{consonant.Value}{vovel.Value}";
-			}
-			else
+			if (AllowChangeOrder)
 			{
 				var order = random.Next(2);
 				result = order == 0
 					? $"{consonant.Value}{vovel.Value}"
 					: $"{vovel.Value}{consonant.Value}";
+			}
+			else
+			{
+				result = $"{consonant.Value}{vovel.Value}";
 			}
 
 			return result;
