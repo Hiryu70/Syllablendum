@@ -11,7 +11,6 @@
 		d:DataContext="{d:DesignInstance Type=viewModels:MainWindowVm,
 										 IsDesignTimeCreatable=True}"
 		mc:Ignorable="d">
-
 	<TabControl>
 		<TabItem Header="До 10 очков">
 			<views:SyllableGame DataContext="{Binding SyllableGame}" />
@@ -20,5 +19,4 @@
 			<views:SyllableTimeGame DataContext="{Binding SyllableTimeGame}" />
 		</TabItem>
 	</TabControl>
-
 </Window>

@@ -12,6 +12,7 @@
 			 mc:Ignorable="d">
 	<UserControl.Resources>
 		<converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+		<converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
 	</UserControl.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -31,7 +32,8 @@
 				Grid.Column="0"
 				HorizontalAlignment="Stretch"
 				Command="{Binding WrongCommand}"
-				FontSize="20">
+				FontSize="20"
+				IsEnabled="{Binding GameMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter='Running'}">
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Text="Не правильно " />
 				<TextBlock Text="{Binding WrongCount}" />
@@ -41,7 +43,8 @@
 				Grid.Column="1"
 				HorizontalAlignment="Stretch"
 				Command="{Binding OkCommand}"
-				FontSize="20">
+				FontSize="20"
+				IsEnabled="{Binding GameMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter='Running'}">
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Text="Правильно " />
 				<TextBlock Text="{Binding OkCount}" />

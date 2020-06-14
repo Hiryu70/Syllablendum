@@ -4,9 +4,11 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>pigeon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="pigeon.ico" />
       <None Remove="winner.png" />
       <Content Include="Images\winner.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
