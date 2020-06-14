@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Syllablendum.ViewModels
 {
-	public class TrueFalseGameVm : ViewModelBase
+	public class SyllableGameVm : ViewModelBase
 	{
 		private int _okCount;
 		private int _wrongCount;
@@ -16,7 +16,7 @@ namespace Syllablendum.ViewModels
 		private bool _allowChangeOrder;
 
 
-		public TrueFalseGameVm()
+		public SyllableGameVm()
 		{
 			OkCommand = new RelayCommand(Ok);
 			WrongCommand = new RelayCommand(Wrong);

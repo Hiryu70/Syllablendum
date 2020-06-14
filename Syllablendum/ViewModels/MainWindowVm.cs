@@ -4,6 +4,7 @@ namespace Syllablendum.ViewModels
 {
 	public class MainWindowVm : ViewModelBase
 	{
-		public TrueFalseGameVm TrueFalseGame { get; set; } = new TrueFalseGameVm();
+		public SyllableGameVm SyllableGame { get; set; } = new SyllableGameVm();
+		public SyllableTimeGameVm SyllableTimeGame { get; set; } = new SyllableTimeGameVm();
 	}
 }

@@ -14,9 +14,11 @@
 
 	<TabControl>
 		<TabItem Header="До 10 очков">
-			<views:TrueFalseGame DataContext="{Binding TrueFalseGame}" />
+			<views:SyllableGame DataContext="{Binding SyllableGame}" />
 		</TabItem>
-		<TabItem Header="На время" />
+		<TabItem Header="На время">
+			<views:SyllableTimeGame DataContext="{Binding SyllableTimeGame}" />
+		</TabItem>
 	</TabControl>
 
 </Window>

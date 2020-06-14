@@ -2,12 +2,18 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Views\TrueFalseGame.xaml.cs">
+    <Compile Update="Views\SyllableTimeGame.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SyllableGame.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\TrueFalseGame.xaml">
+    <Page Update="Views\SyllableTimeGame.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SyllableGame.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

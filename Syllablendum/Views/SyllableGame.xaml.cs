@@ -2,9 +2,9 @@
 
 namespace Syllablendum.Views
 {
-	public partial class TrueFalseGame : UserControl
+	public partial class SyllableGame : UserControl
 	{
-		public TrueFalseGame()
+		public SyllableGame()
 		{
 			InitializeComponent();
 		}

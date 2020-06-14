@@ -2,6 +2,7 @@
 {
 	public enum GameMode
 	{
+		Start,
 		Running,
 		Win,
 		Lose
