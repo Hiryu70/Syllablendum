@@ -8,11 +8,11 @@
 
     <ItemGroup>
       <None Remove="winner.png" />
-      <Content Include="winner.png">
+      <Content Include="Images\winner.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="loser.png" />
-      <Content Include="loser.png">
+      <Content Include="Images\loser.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
